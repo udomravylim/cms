@@ -1,4 +1,3 @@
-
 <div class="panel panel-default">
     <div class="panel-heading">
     <div class="row pad-left-right">
@@ -9,7 +8,11 @@
     <div class="panel-body">
     <div class="center-panel">
     <!--Add tag to display a list of DocumentItem components-->
-    <app-document-item></app-document-item>
+    <app-document-item 
+      *ngFor="let document of documents"
+      [document]="document"
+      (click)="onSelectedDocument(document)">
+    </app-document-item>
 
     </div>
     </div>

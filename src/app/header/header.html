@@ -11,11 +11,11 @@
                 <li><a (click)="onSelected('contacts')">Contacts</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" role="button">Users <span class="caret"></span> </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Save Data</a></li>
-                        <li><a href="#">Fetch Data</a></li>
+                <li class="dropdown" [class.open]="isDropdownOpen">
+                    <a href="#" class="dropdown-toggle" role="button" (click)="toggleDropdown()">Users <span class="caret"></span> </a>
+                    <ul class="dropdown-menu" [class.show]="isDropdownOpen">
+                        <li><a href="#">Login Other</a></li>
+                        <li><a href="#">Logout</a></li>
                     </ul>
                 </li>
             </ul>
