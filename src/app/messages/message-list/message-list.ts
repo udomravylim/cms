@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Message } from '../message.model';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-message-list',
@@ -7,16 +8,26 @@ import { Message } from '../message.model';
   templateUrl: './message-list.html',
   styleUrl: './message-list.css'
 })
-export class MessageList {
-  messages: Message[] = [
-    new Message('1', 'Grades Posted', 'The grades for this assignment have been posted.', 'Bro. Jackson'),
-    new Message('2', 'Due Dates', 'When is assignemnt 3 due?', 'Steve Johnson'),
-    new Message('3', 'Due Date Resp', 'Assignment 3 is due on Saturday at 11:30pm', 'Bro. Jackson'),
-    new Message('4', 'want to meet', 'Can I meet with you tomorrow?', 'Mark Smith'),
-    new Message('5', 'Thanks', 'Thanks for the help with the assignment', 'Steve Johnson')
-  ];
+export class MessageList implements OnInit {
+  messages: Message[] = [];
+
+  constructor(private messageService: MessageService) {}
+
+  ngOnInit() {
+    this.messages = this.messageService.getMessages();
+    this.messageService.messageChangedEvent.subscribe(
+      (messages: Message[]) => {
+        this.messages = messages;
+      }
+    );
+  }
 
   onAddMessage(message: Message) {
-    this.messages.push(message);
+    // This method is called when a new message is added via the message-edit component
+    // The message is already added to the service, so we just need to update our local array
+    console.log('MessageList received new message:', message);
+    this.messages = this.messageService.getMessages();
+    console.log('Updated messages array:', this.messages);
   }
+
 }

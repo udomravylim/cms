@@ -16,6 +16,7 @@ import { Messages } from './messages/messages';
 import { MessageItem } from './messages/message-item/message-item';
 import { MessageEdit } from './messages/message-edit/message-edit';
 import { MessageList } from './messages/message-list/message-list';
+import { Contact } from './contacts/contact/contact';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MessageList } from './messages/message-list/message-list';
     Messages,
     MessageItem,
     MessageEdit,
-    MessageList
+    MessageList,
+    Contact
   ],
   imports: [
     BrowserModule,
