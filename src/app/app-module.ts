@@ -17,6 +17,9 @@ import { MessageItem } from './messages/message-item/message-item';
 import { MessageEdit } from './messages/message-edit/message-edit';
 import { MessageList } from './messages/message-list/message-list';
 import { Contact } from './contacts/contact/contact';
+import { AppRoutingModule } from './app-routing.module';
+import { DocumentEdit } from './documents/document-edit/document-edit';
+import { ContactEdit } from './contacts/contact-edit/contact-edit';
 
 @NgModule({
   declarations: [
@@ -34,11 +37,14 @@ import { Contact } from './contacts/contact/contact';
     MessageItem,
     MessageEdit,
     MessageList,
-    Contact
+    Contact,
+    DocumentEdit,
+    ContactEdit
   ],
   imports: [
     BrowserModule,
-    CommonModule
+    CommonModule,
+    AppRoutingModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
