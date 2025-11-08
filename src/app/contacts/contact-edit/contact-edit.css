@@ -1,0 +1,53 @@
+
+.required.ng-invalid {
+    border: 1px solid red;
+  }
+  
+  .invalid.ng-invalid.ng-dirty {
+    border: 1px solid red;
+  }
+  
+  .pad-left-right{
+    padding-left:.1rem;
+  }
+  
+  .deleteButton {
+    margin-top: 1.5rem;
+    margin-left: -1.2rem;
+    width: 3.4rem;
+  }
+  
+  .buttonDiv {
+    margin-top: 1.5rem;
+  }
+  
+  .groupDiv {
+    min-height: 6rem;
+    border: solid thin lightgrey;
+  }
+  
+  .dragMsg {
+    font-size: 1.3rem;
+    color: darkgrey;
+    margin-left: 3rem;
+  }
+
+  #contact-edit label {
+    font-size: 1.3rem;
+  }
+
+  #contact-edit .form-control {
+    font-size: 1.3rem;
+  }
+
+  #contact-edit .alert {
+    font-size: 1.3rem;
+  }
+
+  #groupList {
+    border: 2px dashed #ccc;
+    padding: 0.5rem;
+    transition: border-color 0.3s;
+  }
+
+  
