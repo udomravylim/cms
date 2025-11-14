@@ -14,7 +14,7 @@ export class MessageList implements OnInit {
   constructor(private messageService: MessageService) {}
 
   ngOnInit() {
-    this.messages = this.messageService.getMessages();
+    this.messageService.getMessages();
     this.messageService.messageChangedEvent.subscribe(
       (messages: Message[]) => {
         this.messages = messages;
@@ -24,10 +24,9 @@ export class MessageList implements OnInit {
 
   onAddMessage(message: Message) {
     // This method is called when a new message is added via the message-edit component
-    // The message is already added to the service, so we just need to update our local array
+    // The message is already added to the service, and the event subscription will update the array
     console.log('MessageList received new message:', message);
-    this.messages = this.messageService.getMessages();
-    console.log('Updated messages array:', this.messages);
+    // Messages array will be updated automatically via the messageChangedEvent subscription
   }
 
 }
