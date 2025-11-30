@@ -17,7 +17,7 @@ export class MessageService {
   }
 
   getMessages(): void {
-    this.http.get<Message[]>('https://cms-fall2025-default-rtdb.firebaseio.com/messages.json')
+    this.http.get<Message[]>('http://localhost:3000/messages')
       .subscribe(
         // success method
         (messages: Message[]) => {
@@ -73,13 +73,88 @@ export class MessageService {
     return null;
   }
 
+  sortAndSend() {
+    this.messages.sort((a, b) => {
+      if (a.subject < b.subject) {
+        return -1;
+      } else if (a.subject > b.subject) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    this.messageChangedEvent.emit(this.messages.slice());
+  }
+
   addMessage(message: Message) {
     if (!message) {
       return;
     }
-    this.maxMessageId++;
-    message.id = this.maxMessageId.toString();
-    this.messages.push(message);
-    this.storeMessages();
+
+    // make sure id of the new Message is empty
+    message.id = '';
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // add to database
+    this.http.post<{ message: string, messageData: Message }>('http://localhost:3000/messages',
+      message,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new message to messages
+          this.messages.push(responseData.messageData);
+          this.sortAndSend();
+        }
+      );
+  }
+
+  updateMessage(originalMessage: Message, newMessage: Message) {
+    if (!originalMessage || !newMessage) {
+      return;
+    }
+
+    const pos = this.messages.findIndex(m => m.id === originalMessage.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // set the id of the new Message to the id of the old Message
+    newMessage.id = originalMessage.id;
+    (newMessage as any)._id = (originalMessage as any)._id;
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // update database
+    this.http.put('http://localhost:3000/messages/' + originalMessage.id,
+      newMessage, { headers: headers })
+      .subscribe(
+        (response: Response) => {
+          this.messages[pos] = newMessage;
+          this.sortAndSend();
+        }
+      );
+  }
+
+  deleteMessage(message: Message) {
+    if (!message) {
+      return;
+    }
+
+    const pos = this.messages.findIndex(m => m.id === message.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // delete from database
+    this.http.delete('http://localhost:3000/messages/' + message.id)
+      .subscribe(
+        (response: Response) => {
+          this.messages.splice(pos, 1);
+          this.sortAndSend();
+        }
+      );
   }
 }

@@ -12,7 +12,7 @@ export class MessageEdit {
   @ViewChild('subject') subjectInputRef!: ElementRef;
   @ViewChild('msgText') msgTextInputRef!: ElementRef;
   @Output() addMessageEvent = new EventEmitter<Message>();
-  currentSender: string = "Ravy"; // Using Rex Barzee's ID
+  currentSender: string = "101"; 
 
   constructor(private messageService: MessageService) {}
 

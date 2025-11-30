@@ -1,3 +1,6 @@
+// Load environment variables
+require('dotenv').config();
+
 // Get dependencies
 var express = require('express');
 var path = require('path');
@@ -5,6 +8,7 @@ var http = require('http');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 // Get defined routing files
 var index = require('./server/routes/app');
@@ -46,6 +50,16 @@ app.use('/', index);
 app.use('/messages', messageRoutes);
 app.use('/contacts', contactRoutes);
 app.use('/documents', documentsRoutes);
+
+// establish a connection to the mongo database
+const mongoDB = process.env.MONGODB_URI || 'mongodb://localhost:27017/cms';
+mongoose.connect(mongoDB)
+   .then(() => {
+      console.log('Connected to database!');
+   })
+   .catch((err) => {
+      console.log('Connection failed: ' + err);
+   });
 
 // Tell express to map all other non-defined routes back to the index page
 // catch 404 and forward to error handler

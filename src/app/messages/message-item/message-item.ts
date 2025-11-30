@@ -16,7 +16,13 @@ export class MessageItem implements OnInit {
   constructor(private contactService: ContactService) {}
   
   ngOnInit() {
-    const contact: Contact = this.contactService.getContact(this.message.sender);
-    this.messageSender = contact ? contact.name : this.message.sender;
+    // Check if sender is already a populated Contact object
+    if (typeof this.message.sender === 'object' && this.message.sender !== null) {
+      this.messageSender = (this.message.sender as Contact).name;
+    } else {
+      // Sender is an ID string, look it up
+      const contact: Contact = this.contactService.getContact(this.message.sender as string);
+      this.messageSender = contact ? contact.name : (this.message.sender as string);
+    }
   }
 }
